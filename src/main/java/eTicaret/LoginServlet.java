@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
             	System.out.println("basarili kayıt");
 				resp.sendRedirect("admin/dashboard");
             } else {
-            	System.out.println("basarili kayıt");
+            	System.out.println("basarisiz kayıt");
 				resp.sendRedirect("login");
             }
 

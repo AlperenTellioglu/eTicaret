@@ -39,9 +39,9 @@
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"><a class="nav-link active"
 							aria-current="page" href="/eTicaret/admin/dashboard">Anasayfa</a></li>
-						<li class="nav-item"><a class="nav-link" href="admin/products">Ürünler</a></li>
-						<li class="nav-item"><a class="nav-link" href="admin/categories">Kategoriler</a></li>
-						<li class="nav-item"><a class="nav-link" href="admin/users">Kullanıcılar</a></li>
+						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/products">Ürünler</a></li>
+						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/categories">Kategoriler</a></li>
+						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/users">Kullanıcılar</a></li>
 					</ul>
 					<a class="btn btn-outline-light" href="#">Çıkış</a>
 				</div>
