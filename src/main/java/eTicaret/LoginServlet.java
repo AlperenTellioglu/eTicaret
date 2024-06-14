@@ -21,9 +21,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	req.getRequestDispatcher("login.jsp").forward(req, resp);
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -41,11 +41,18 @@ public class LoginServlet extends HttpServlet {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-            	System.out.println("basarili kayıt");
-				resp.sendRedirect("admin/dashboard");
+                // Başarılı giriş durumunda session oluştur
+                
+                req.getSession().setAttribute("isLoggedIn", true);
+
+                // Email içinde @ işaretinden önce admin varsa admin paneline yönlendir
+                if (email.toLowerCase().startsWith("admin@")) {
+                    resp.sendRedirect("admin/dashboard");
+                } else {
+                    resp.sendRedirect("index.jsp");
+                }
             } else {
-            	System.out.println("basarisiz kayıt");
-				resp.sendRedirect("login");
+                resp.sendRedirect("login");
             }
 
             conn.close();
