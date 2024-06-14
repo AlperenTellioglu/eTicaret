@@ -45,11 +45,12 @@ public class RegisterServlet extends HttpServlet {
 			int result = statement.executeUpdate();
 			conn.close();
 
-//            PrintWriter out = resp.getWriter();
 			if (result > 0) {
-				resp.sendRedirect("adminmain.jsp");
+				System.out.println("basarili kayıt");
+				resp.sendRedirect("admin/dashboard");
 			} else {
-				resp.sendRedirect("register.jsp");
+				System.out.println("basarisiz kayıt");
+				resp.sendRedirect("register");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

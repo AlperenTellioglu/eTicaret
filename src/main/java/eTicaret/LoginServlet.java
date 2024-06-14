@@ -1,46 +1,51 @@
 package eTicaret;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import eTicaret.configuration.DatabaseConfiguration;
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -4342854810163655323L;
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database";
-    private static final String DB_USER = "eadmin";
-    private static final String DB_PASSWORD = "1234";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	req.getRequestDispatcher("login.jsp").forward(req, resp);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            conn = DatabaseConfiguration.getConnection();
+            String sql = "SELECT * FROM kullanicilar WHERE email = ? AND password = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, username);
+            statement.setString(1, email);
             statement.setString(2, password);
 
             ResultSet resultSet = statement.executeQuery();
 
-            PrintWriter out = response.getWriter();
             if (resultSet.next()) {
-                out.println("Login successful!");
+            	System.out.println("basarili kayıt");
+				resp.sendRedirect("admin/dashboard");
             } else {
-                out.println("Invalid username or password.");
+            	System.out.println("basarili kayıt");
+				resp.sendRedirect("login");
             }
 
             conn.close();
