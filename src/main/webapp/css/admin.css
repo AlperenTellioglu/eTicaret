@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+.darker {
+	background-color: #202022;
+}
+
+.darkest {
+	background-color: #141415;
+}
+
+.dashboard-button{
+	width:150px;
+	height:150px;
+}

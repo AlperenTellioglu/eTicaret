@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/category/list", "/admin/category/add", "/admin/category/update"})
+@WebServlet("/admin/category/*")
 public class KategoriServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9071732025782103106L;

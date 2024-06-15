@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/product/list", "/admin/product/add", "/admin/product/update"})
+@WebServlet("/admin/product/*")
 public class UrunServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5607346776180865194L;

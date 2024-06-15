@@ -14,15 +14,7 @@
 	crossorigin="anonymous">
 
 <title>Hello, world!</title>
-<style type="text/css">
-.darker {
-	background-color: #202022;
-}
-
-.darkest {
-	background-color: #141415
-}
-</style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
 </head>
 <body class="darkest text-white">
 	<header>
@@ -55,13 +47,13 @@
 		<div class="row">
 			<div class="col"></div>
 			<div class="col text-center">
-				<button class="btn btn-dark" style="width:150px;height:150px;">Ürün Ekle</button>
+				<button class="btn btn-dark dashboard-button">Ürün Ekle</button>
 			</div>
 			<div class="col text-center">
-				<button class="btn btn-dark" style="width:150px;height:150px;">Kategori Ekle</button>
+				<button class="btn btn-dark dashboard-button">Kategori Ekle</button>
 			</div>
 			<div class="col text-center">
-				<button class="btn btn-dark" style="width:150px;height:150px;">Kullanıcı Ekle</button>
+				<button class="btn btn-dark dashboard-button">Kullanıcı Ekle</button>
 			</div>
 			<div class="col"></div>
 		</div>

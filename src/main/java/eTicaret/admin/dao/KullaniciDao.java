@@ -51,7 +51,7 @@ public class KullaniciDao {
 	}
 
 	public List<Kullanici> list() {
-		List<Kullanici> users = new ArrayList<>();
+		List<Kullanici> kullanicilar = new ArrayList<>();
 		try (Connection connection = DatabaseConfiguration.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_KULLANICI_SQL)) {
 			ResultSet rs = preparedStatement.executeQuery();
@@ -62,12 +62,12 @@ public class KullaniciDao {
 				String soyad = rs.getString("soyad");
 				String email = rs.getString("email");
 				String password = rs.getString("password");
-				users.add(new Kullanici(id, ad, soyad, email, password));
+				kullanicilar.add(new Kullanici(id, ad, soyad, email, password));
 			}
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
-		return users;
+		return kullanicilar;
 	}
 
 	public boolean delete(int id) throws SQLException {

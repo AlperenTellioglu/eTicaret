@@ -17,15 +17,7 @@
 	crossorigin="anonymous">
 
 <title>Hello, world!</title>
-<style type="text/css">
-.darker {
-	background-color: #202022;
-}
-
-.darkest {
-	background-color: #141415
-}
-</style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
 </head>
 <body class="darkest text-white">
 	<header>
