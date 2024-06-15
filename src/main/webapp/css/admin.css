@@ -8,7 +8,22 @@
 	background-color: #141415;
 }
 
-.dashboard-button{
-	width:150px;
-	height:150px;
+.dashboard-button {
+	width: 150px;
+	height: 150px;
+}
+
+.admin-body {
+	background-color: #dfdfdf;
+}
+
+
+.edit-button, .delete-button {
+	padding: 5px;
+	margin: 2px;
+}
+
+.edit-button svg, .delete-button svg {
+	width: 20px;
+	height: 20px;
 }

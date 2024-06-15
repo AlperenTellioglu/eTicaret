@@ -17,35 +17,11 @@
 	crossorigin="anonymous">
 
 <title>Hello, world!</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/admin.css">
 </head>
-<body class="darkest text-white">
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark darker">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Dashboard</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link" aria-current="page"
-							href="/eTicaret/admin/dashboard">Anasayfa</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="/eTicaret/admin/product/list">Ürünler</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="/eTicaret/admin/category/list">Kategoriler</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
-					</ul>
-					<a class="btn btn-outline-light" href="#">Çıkış</a>
-				</div>
-			</div>
-		</nav>
-	</header>
+<body class="admin-body">
+	<%@ include file="/admin/navbar.jsp"%>
 
 	<div class="container pt-4">
 		<h1 class="display-6">Kullanıcılar</h1>
@@ -61,7 +37,7 @@
 			</div>
 		</div>
 
-		<table class="table table-dark">
+		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">ID</th>
@@ -91,15 +67,29 @@
 					<td>
 						<form action="/eTicaret/admin/user/update" method="get"
 							class="d-inline">
+							<button type="submit" class="btn btn-warning edit-button">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+									fill="currentColor">
+                            <path
+										d="M3 21h18v2H3v-2zm3.89-2.49l2.29-.57 12.32-12.33a2.51 2.51 0 0 0 0-3.54l-.56-.56a2.51 2.51 0 0 0-3.54 0L5.59 14.33l-.57 2.29a1.25 1.25 0 0 0 1.87 1.87zm2.3-3.09L18.11 3.89a.75.75 0 0 1 1.06 0l.56.56a.75.75 0 0 1 0 1.06L7.81 15.11l-1.13.28.28-1.13z" />
+                        </svg>
+							</button>
 							<input type="hidden" name="kullanici_id"
-								value="<%=kullanici.getId()%>"> <input type="submit"
-								class="btn btn-warning" value="Düzenle">
+								value="<%=kullanici.getId()%>">
 						</form>
-						<form action="/eTicaret/admin/user/"
-							method="post" class="d-inline">
+						<form action="/eTicaret/admin/user/" method="post"
+							class="d-inline">
+							<button type="submit"
+								class="btn btn-danger delete-button">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+									fill="currentColor">
+                            <path
+										d="M16 9v10H8V9h8m-1.5-6h-5L9 4H5v2h14V4h-4l-.5-1zM18 8H6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8z" />
+                        </svg>
+							</button>
 							<input type="hidden" name="action" value="delete"> <input
 								type="hidden" name="kullanici_id" value="<%=kullanici.getId()%>">
-							<input type="submit" class="btn btn-danger" value="Sil">
+
 						</form>
 					</td>
 				</tr>

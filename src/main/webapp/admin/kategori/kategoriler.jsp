@@ -16,30 +16,8 @@
 <title>Hello, world!</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
 </head>
-<body class="darkest text-white">
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark darker">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Dashboard</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link"
-							aria-current="page" href="/eTicaret/admin/dashboard">Anasayfa</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/product/list">Ürünler</a></li>
-						<li class="nav-item"><a class="nav-link active" href="/eTicaret/admin/category/list">Kategoriler</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
-					</ul>
-					<a class="btn btn-outline-light" href="#">Çıkış</a>
-				</div>
-			</div>
-		</nav>
-	</header>
+<body class="admin-body">
+	<%@ include file="/admin/navbar.jsp" %>
 
 	<div class="container pt-4">
 		<h1 class="display-6 mb-5">Kategoriler</h1>
