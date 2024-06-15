@@ -37,11 +37,11 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active"
+						<li class="nav-item"><a class="nav-link"
 							aria-current="page" href="/eTicaret/admin/dashboard">Anasayfa</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/products">Ürünler</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/categories">Kategoriler</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/users">Kullanıcılar</a></li>
+						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/product/list">Ürünler</a></li>
+						<li class="nav-item"><a class="nav-link active" href="/eTicaret/admin/category/list">Kategoriler</a></li>
+						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
 					</ul>
 					<a class="btn btn-outline-light" href="#">Çıkış</a>
 				</div>

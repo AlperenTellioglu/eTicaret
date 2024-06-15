@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="eTicaret.admin.model.Kullanici"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!doctype html>
 <html lang="en">
@@ -37,11 +40,14 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active"
+						<li class="nav-item"><a class="nav-link"
 							aria-current="page" href="/eTicaret/admin/dashboard">Anasayfa</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/products">Ürünler</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/categories">Kategoriler</a></li>
-						<li class="nav-item"><a class="nav-link" href="/eTicaret/admin/users">Kullanıcılar</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/eTicaret/admin/product/list">Ürünler</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/eTicaret/admin/category/list">Kategoriler</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
 					</ul>
 					<a class="btn btn-outline-light" href="#">Çıkış</a>
 				</div>
@@ -50,35 +56,49 @@
 	</header>
 
 	<div class="container pt-4">
-		<h1 class="display-6 mb-5">Ürünler</h1>
+		<h1 class="display-6 mb-5">Kullanıcılar</h1>
 
 		<table class="table table-dark">
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
+					<th scope="col">ID</th>
+					<th scope="col">Ad</th>
+					<th scope="col">Soyad</th>
+					<th scope="col">Email</th>
+					<th scope="col">Şifre</th>
+					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody>
+				<%
+				Object obj = request.getAttribute("kullanicilar");
+				if (obj instanceof ArrayList<?>) {
+					List<?> objeler = (List<?>) obj;
+
+					for (Object obje : objeler) {
+						if (obje instanceof Kullanici) {
+					Kullanici kullanici = (Kullanici) obje;
+				%>
 				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
+					<th scope="row"><%=kullanici.getId()%></th>
+					<td><%=kullanici.getAd()%></td>
+					<td><%=kullanici.getSoyad()%></td>
+					<td><%=kullanici.getEmail()%></td>
+					<td><%=kullanici.getPassword()%></td>
+					<td>
+						<form action="" class="d-inline">
+							<input type="submit" class="btn btn-warning" value="Düzenle">
+						</form>
+						<form action="" class="d-inline">
+							<input type="submit" class="btn btn-danger" value="Sil">
+						</form>
+					</td>
 				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td colspan="2">Larry the Bird</td>
-					<td>@twitter</td>
-				</tr>
+				<%
+				}
+				}
+				}
+				%>
 			</tbody>
 		</table>
 

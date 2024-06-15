@@ -1,4 +1,4 @@
-package eTicaret.admin;
+package eTicaret.admin.servlet;
 
 import java.io.IOException;
 
@@ -16,6 +16,6 @@ public class DashboardServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		req.getRequestDispatcher("/admin/adminmain.jsp").forward(req, resp); // "adminmain.jsp" kullanilabilir
+		req.getRequestDispatcher("/admin/dashboard.jsp").forward(req, resp);
 	}
 }
