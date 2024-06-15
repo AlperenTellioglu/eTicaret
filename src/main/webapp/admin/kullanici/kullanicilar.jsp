@@ -40,8 +40,8 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link"
-							aria-current="page" href="/eTicaret/admin/dashboard">Anasayfa</a></li>
+						<li class="nav-item"><a class="nav-link" aria-current="page"
+							href="/eTicaret/admin/dashboard">Anasayfa</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="/eTicaret/admin/product/list">Ürünler</a></li>
 						<li class="nav-item"><a class="nav-link"
@@ -56,7 +56,18 @@
 	</header>
 
 	<div class="container pt-4">
-		<h1 class="display-6 mb-5">Kullanıcılar</h1>
+		<h1 class="display-6">Kullanıcılar</h1>
+		<hr class="mb-4">
+
+		<div class="row mb-4">
+			<div class="col">
+				<a class="btn btn-secondary" href="/eTicaret/admin/dashboard">Geri</a>
+			</div>
+			<div class="col text-end">
+				<a class="btn btn-primary" href="/eTicaret/admin/user/add">Kullanıcı
+					Ekle</a>
+			</div>
+		</div>
 
 		<table class="table table-dark">
 			<thead>
@@ -86,10 +97,16 @@
 					<td><%=kullanici.getEmail()%></td>
 					<td><%=kullanici.getPassword()%></td>
 					<td>
-						<form action="" class="d-inline">
-							<input type="submit" class="btn btn-warning" value="Düzenle">
+						<form action="/eTicaret/admin/user/update" method="get"
+							class="d-inline">
+							<input type="hidden" name="kullanici_id"
+								value="<%=kullanici.getId()%>"> <input type="submit"
+								class="btn btn-warning" value="Düzenle">
 						</form>
-						<form action="" class="d-inline">
+						<form action="/eTicaret/admin/user/"
+							method="post" class="d-inline">
+							<input type="hidden" name="action" value="delete"> <input
+								type="hidden" name="kullanici_id" value="<%=kullanici.getId()%>">
 							<input type="submit" class="btn btn-danger" value="Sil">
 						</form>
 					</td>

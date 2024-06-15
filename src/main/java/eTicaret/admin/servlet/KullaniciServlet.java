@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import eTicaret.admin.dao.KullaniciDao;
 import eTicaret.admin.model.Kullanici;
 
-@WebServlet(urlPatterns = { "/admin/user/list", "/admin/user/add", "/admin/user/update" })
+@WebServlet("/admin/user/*")
 public class KullaniciServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1112806690048086911L;
@@ -26,7 +26,7 @@ public class KullaniciServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getServletPath();
+		String action = req.getPathInfo();
 		System.out.println("action(get): " + action);
 		if (action == null) {
 			action = "/";
@@ -34,13 +34,13 @@ public class KullaniciServlet extends HttpServlet {
 
 		try {
 			switch (action) {
-			case "admin/user/add":
-				req.getRequestDispatcher("/admin/kullanici/kullaniciekle.jsp").forward(req, resp);
+			case "/add":
+				showCreateForm(req, resp);
 				break;
-			case "admin/user/update":
-				req.getRequestDispatcher("/admin/kullanici/kullaniciduzenle.jsp").forward(req, resp);
+			case "/update":
+				showEditForm(req, resp);
 				break;
-			case "admin/user/list":
+			case "/list":
 			default:
 				list(req, resp);
 				break;
@@ -52,20 +52,27 @@ public class KullaniciServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getServletPath();
+		String action = req.getParameter("action");
 		System.out.println("action(post): " + action);
 
 		if (action == null) {
 			action = "/";
 		}
 
-		switch (action) {
-		case "admin/user/insert":
-			break;
-		case "admin/user/edit":
-			break;
-		case "admin/user/delete":
-			break;
+		try {
+			switch (action) {
+			case "insert":
+				insert(req, resp);
+				break;
+			case "edit":
+				update(req, resp);
+				break;
+			case "delete":
+				delete(req, resp);
+				break;
+			}
+		} catch (Exception e) {
+			throw new ServletException(e);
 		}
 	}
 
@@ -74,5 +81,47 @@ public class KullaniciServlet extends HttpServlet {
 		List<Kullanici> kullanicilar = kullaniciDao.list();
 		req.setAttribute("kullanicilar", kullanicilar);
 		req.getRequestDispatcher("/admin/kullanici/kullanicilar.jsp").forward(req, resp);
+	}
+
+	private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/admin/kullanici/kullaniciform.jsp").forward(req, resp);
+	}
+
+	private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("kullanici_id"));
+		Kullanici eskiKullanici = kullaniciDao.read(id);
+		req.setAttribute("kullanici", eskiKullanici);
+		req.getRequestDispatcher("/admin/kullanici/kullaniciform.jsp").forward(req, resp);
+	}
+
+	private void insert(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+		String ad = req.getParameter("ad");
+		String soyad = req.getParameter("soyad");
+		String email = req.getParameter("email");
+		String password = req.getParameter("password");
+		Kullanici newUser = new Kullanici(0, ad, soyad, email, password);
+		kullaniciDao.create(newUser);
+		resp.sendRedirect("list");
+	}
+
+	private void update(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+		System.out.println("update: pre");
+		int id = Integer.parseInt(req.getParameter("kullanici_id"));
+		System.out.println("update: id=" +String.valueOf(id));
+		String ad = req.getParameter("ad");
+		String soyad = req.getParameter("soyad");
+		String email = req.getParameter("email");
+		String password = req.getParameter("password");
+
+		Kullanici kullanici = new Kullanici(id, ad, soyad, email, password);
+		kullaniciDao.update(kullanici);
+		resp.sendRedirect("list");
+	}
+
+	private void delete(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+		int id = Integer.parseInt(req.getParameter("kullanici_id"));
+		kullaniciDao.delete(id);
+		resp.sendRedirect("list");
 	}
 }
