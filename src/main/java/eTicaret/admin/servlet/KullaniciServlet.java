@@ -100,8 +100,8 @@ public class KullaniciServlet extends HttpServlet {
 		String soyad = req.getParameter("soyad");
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		Kullanici newUser = new Kullanici(0, ad, soyad, email, password);
-		kullaniciDao.create(newUser);
+		Kullanici yeniKategori = new Kullanici(0, ad, soyad, email, password);
+		kullaniciDao.create(yeniKategori);
 		resp.sendRedirect("list");
 	}
 

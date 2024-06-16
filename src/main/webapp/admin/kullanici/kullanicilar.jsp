@@ -45,7 +45,7 @@
 					<th scope="col">Soyad</th>
 					<th scope="col">Email</th>
 					<th scope="col">Şifre</th>
-					<th scope="col"></th>
+					<th scope="col" class="text-end" style="width: 15%;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,12 +59,12 @@
 					Kullanici kullanici = (Kullanici) obje;
 				%>
 				<tr>
-					<th scope="row"><%=kullanici.getId()%></th>
-					<td><%=kullanici.getAd()%></td>
-					<td><%=kullanici.getSoyad()%></td>
-					<td><%=kullanici.getEmail()%></td>
-					<td><%=kullanici.getPassword()%></td>
-					<td>
+					<th scope="row" class="align-middle"><%=kullanici.getId()%></th>
+					<td class="align-middle"><%=kullanici.getAd()%></td>
+					<td class="align-middle"><%=kullanici.getSoyad()%></td>
+					<td class="align-middle"><%=kullanici.getEmail()%></td>
+					<td class="align-middle"><%=kullanici.getPassword()%></td>
+					<td class="text-end">
 						<form action="/eTicaret/admin/user/update" method="get"
 							class="d-inline">
 							<button type="submit" class="btn btn-warning edit-button">

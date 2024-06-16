@@ -5,9 +5,8 @@ public class Kategori {
 	private String ad;
 
 	public Kategori(int id, String ad) {
-		super();
-		this.id = id;
-		this.ad = ad;
+		setId(id);
+		setAd(ad);
 	}
 
 	public int getId() {

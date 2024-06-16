@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="eTicaret.admin.model.Urun"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!doctype html>
 <html lang="en">
@@ -14,41 +17,88 @@
 	crossorigin="anonymous">
 
 <title>Hello, world!</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/admin.css">
 </head>
 <body class="admin-body">
-	<%@ include file="/admin/navbar.jsp" %>
+	<%@ include file="/admin/navbar.jsp"%>
 
 	<div class="container pt-4">
-		<h1 class="display-6 mb-5">Ürünler</h1>
+		<h1 class="display-6">Ürünler</h1>
+		<hr class="mb-4">
 
-		<table class="table table-dark">
+		<div class="row mb-4">
+			<div class="col">
+				<a class="btn btn-secondary" href="/eTicaret/admin/dashboard">Geri</a>
+			</div>
+			<div class="col text-end">
+				<a class="btn btn-primary" href="/eTicaret/admin/product/add">Ürün
+					Ekle</a>
+			</div>
+		</div>
+
+		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
+					<th scope="col">ID</th>
+					<th scope="col">Ad</th>
+					<th scope="col">Açıklama</th>
+					<th scope="col">Fiyat</th>
+					<th scope="col">Stok Miktarı</th>
+					<th scope="col">Kategori</th>
+					<th scope="col" class="text-end" style="width: 15%;"></th>
 				</tr>
 			</thead>
 			<tbody>
+				<%
+				Object obj = request.getAttribute("urunler");
+				if (obj instanceof ArrayList<?>) {
+					List<?> objeler = (List<?>) obj;
+
+					for (Object obje : objeler) {
+						if (obje instanceof Urun) {
+					Urun urun = (Urun) obje;
+				%>
 				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
+					<th scope="row" class="align-middle"><%=urun.getId()%></th>
+					<td class="align-middle"><%=urun.getAd()%></td>
+					<td class="align-middle"><%=urun.getAciklama()%></td>
+					<td class="align-middle"><%=urun.getFiyat()%></td>
+					<td class="align-middle"><%=urun.getStokMiktar()%></td>
+					<td class="align-middle"><%=urun.getKategoriId()%></td>
+					<td class="text-end">
+						<form action="/eTicaret/admin/product/update" method="get"
+							class="d-inline">
+							<button type="submit" class="btn btn-warning edit-button">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+									fill="currentColor">
+                            <path
+										d="M3 21h18v2H3v-2zm3.89-2.49l2.29-.57 12.32-12.33a2.51 2.51 0 0 0 0-3.54l-.56-.56a2.51 2.51 0 0 0-3.54 0L5.59 14.33l-.57 2.29a1.25 1.25 0 0 0 1.87 1.87zm2.3-3.09L18.11 3.89a.75.75 0 0 1 1.06 0l.56.56a.75.75 0 0 1 0 1.06L7.81 15.11l-1.13.28.28-1.13z" />
+                        </svg>
+							</button>
+							<input type="hidden" name="urunId"
+								value="<%=urun.getId()%>">
+						</form>
+						<form action="/eTicaret/admin/product/" method="post"
+							class="d-inline">
+							<button type="submit" class="btn btn-danger delete-button">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+									fill="currentColor">
+                            <path
+										d="M16 9v10H8V9h8m-1.5-6h-5L9 4H5v2h14V4h-4l-.5-1zM18 8H6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8z" />
+                        </svg>
+							</button>
+							<input type="hidden" name="action" value="delete"> <input
+								type="hidden" name="urunId" value="<%=urun.getId()%>">
+
+						</form>
+					</td>
 				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td colspan="2">Larry the Bird</td>
-					<td>@twitter</td>
-				</tr>
+				<%
+				}
+				}
+				}
+				%>
 			</tbody>
 		</table>
 

@@ -31,6 +31,7 @@
 					<li class="nav-item"><a class="nav-link <%= currentURI.endsWith("kullanicilar.jsp") ? "active" : "" %>"
 						href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
 				</ul>
+				<span class="text-white me-4">Fatih Çalışır</span>
 				<a class="btn btn-outline-light" href="#">Çıkış</a>
 			</div>
 		</div>

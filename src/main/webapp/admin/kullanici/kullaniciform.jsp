@@ -14,45 +14,45 @@
 	crossorigin="anonymous">
 
 <title>Hello, world!</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/admin.css">
 </head>
 <body class="admin-body">
 	<%@ include file="/admin/navbar.jsp"%>
 	<div class="container pt-4">
 		<h1 class="display-6">${kullanici == null ? 'Yeni Kullanıcı Ekle' : 'Kullanıcı Düzenle'}</h1>
 		<hr class="mb-4">
-		
-		<div class="row mb-4">
-			<div class="col">
-				<a class="btn btn-secondary" href="/eTicaret/admin/dashboard">Geri</a>
-			</div>
-			<div class="col text-end">
-				<a class="btn btn-primary" href="/eTicaret/admin/user/add">Kullanıcı
-					Ekle</a>
-			</div>
-		</div>
 
 		<form action="/eTicaret/admin/user/" method="post">
 			<input type="hidden" name="action"
 				value="${kullanici == null ? 'insert' : 'edit'}"> <input
-				type="hidden" name="kullanici_id" value="${kullanici.id}">
+				type="hidden" name="kullanici_id" value="${kullanici.getId()}">
 			<div class="form-group">
-				<label for="firstName">Ad</label> <input type="text" name="ad"
-					class="form-control" value="${kullanici.ad}">
+				<label for="ad">Ad</label> <input type="text" name="ad"
+					class="form-control" value="${kullanici.getAd()}">
 			</div>
 			<div class="form-group">
-				<label for="lastName">Soyad</label> <input type="text" name="soyad"
-					class="form-control" value="${kullanici.soyad}">
+				<label for="soyad">Soyad</label> <input type="text" name="soyad"
+					class="form-control" value="${kullanici.getSoyad()}">
 			</div>
 			<div class="form-group">
 				<label for="email">Email</label> <input type="email" name="email"
-					class="form-control" value="${kullanici.email}">
+					class="form-control" value="${kullanici.getEmail()}">
 			</div>
 			<div class="form-group">
 				<label for="password">Şifre</label> <input type="password"
-					name="password" class="form-control" value="${kullanici.password}">
+					name="password" class="form-control" value="${kullanici.getPassword()}">
 			</div>
-			<button type="submit" class="btn btn-primary">${kullanici == null ? 'Kaydet' : 'Güncelle'}</button>
+
+			<div class="row my-5">
+				<div class="col">
+					<a class="btn btn-secondary" href="/eTicaret/admin/user/list">Geri</a>
+				</div>
+				<div class="col text-end">
+					<button type="submit" class="btn btn-primary">${kullanici == null ? 'Kaydet' : 'Güncelle'}</button>
+				</div>
+			</div>
+
 		</form>
 	</div>
 

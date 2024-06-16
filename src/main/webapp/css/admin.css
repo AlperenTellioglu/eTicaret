@@ -11,12 +11,12 @@
 .dashboard-button {
 	width: 150px;
 	height: 150px;
+	font-size: 1.5rem;
 }
 
 .admin-body {
 	background-color: #dfdfdf;
 }
-
 
 .edit-button, .delete-button {
 	padding: 5px;

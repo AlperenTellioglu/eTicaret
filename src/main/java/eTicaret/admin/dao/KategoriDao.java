@@ -35,7 +35,7 @@ public class KategoriDao {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				String ad = rs.getString("ad");
+				String ad = rs.getString("kategoriAdi");
 				kategori = new Kategori(id, ad);
 			}
 		} catch (SQLException e) {
@@ -51,8 +51,8 @@ public class KategoriDao {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("kullanici_id");
-				String ad = rs.getString("ad");;
+				int id = rs.getInt("kategoriId");
+				String ad = rs.getString("kategoriAdi");;
 				kategoriler.add(new Kategori(id, ad));
 			}
 		} catch (SQLException e) {
@@ -76,7 +76,7 @@ public class KategoriDao {
 		try (Connection connection = DatabaseConfiguration.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_KATEGORI_SQL)) {
 			statement.setString(1, kategori.getAd());
-			statement.setInt(5, kategori.getId());
+			statement.setInt(2, kategori.getId());
 			rowUpdated = statement.executeUpdate() > 0;
 		}
 		return rowUpdated;

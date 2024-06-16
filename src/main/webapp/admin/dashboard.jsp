@@ -21,19 +21,28 @@
 	<%@ include file="/admin/navbar.jsp"%>
 
 	<div class="container pt-4">
-		<h1 class="display-6 mb-5">Dashboard</h1>
+		<h1 class="display-6">Dashboard</h1>
+		<hr class="mb-4">
 
-		<div class="row">
+		<div class="row mt-5">
 			<div class="col"></div>
 			<div class="col text-center">
-				<button class="btn btn-dark dashboard-button">Ürün Ekle</button>
+				<form action="/eTicaret/admin/user/add" method="get">
+					<button class="btn btn-primary dashboard-button" type="submit">Kullanıcı
+						Ekle</button>
+				</form>
 			</div>
 			<div class="col text-center">
-				<button class="btn btn-dark dashboard-button">Kategori Ekle</button>
+				<form action="/eTicaret/admin/product/add" method="get">
+					<button class="btn btn-primary dashboard-button" type="submit">Ürün
+						Ekle</button>
+				</form>
 			</div>
 			<div class="col text-center">
-				<button class="btn btn-dark dashboard-button">Kullanıcı
-					Ekle</button>
+				<form action="/eTicaret/admin/category/add" method="get">
+					<button class="btn btn-primary dashboard-button" type="submit">Kategori
+						Ekle</button>
+				</form>
 			</div>
 			<div class="col"></div>
 		</div>
