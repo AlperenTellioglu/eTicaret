@@ -13,7 +13,7 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 
-<title>Hello, world!</title>
+<title>${kategori == null ? 'Yeni Kategori Ekle' : 'Kategori Düzenle'} - Admin Paneli</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/admin.css">
 </head>

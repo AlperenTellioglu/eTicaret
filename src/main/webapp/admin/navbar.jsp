@@ -36,7 +36,9 @@
 						href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
 				</ul>
 				<span class="text-white me-4"><%=girisIsim %></span>
-				<a class="btn btn-outline-light" href="/eTicaret/login">Çıkış</a>
+				<form action="/eTicaret/logout">
+					<button class="btn btn-outline-light" type="submit">Çıkış</button>
+				</form>
 			</div>
 		</div>
 	</nav>

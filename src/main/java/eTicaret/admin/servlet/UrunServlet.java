@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.UrunDao;
 import eTicaret.admin.model.Urun;
+import eTicaret.admin.util.MockAuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 
 @WebServlet("/admin/product/*")
@@ -29,6 +30,16 @@ public class UrunServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		NavbarUtil.setLoggedInUsername(req);
+		
+		if (!MockAuthUtil.isLoggedIn(req)) {
+			resp.sendRedirect("/eTicaret/login");
+			return;
+		}
+		
+		if (!MockAuthUtil.isAdmin()) {
+			resp.sendRedirect("/eTicaret/");
+			return;
+        }
 		
 		String action = req.getPathInfo();
 		System.out.println("action(get): " + action);
