@@ -9,11 +9,15 @@
 <body>
 	<%
 	String currentURI = request.getRequestURI();
+	String girisIsim = "Giriş Yapılmadı!";
+	if (request.getAttribute("girisIsim") != null){
+		girisIsim = (String) request.getAttribute("girisIsim");
+	}
 	%>
 
 	<nav class="navbar navbar-expand-lg navbar-dark darker">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Dashboard</a>
+			<a class="navbar-brand" href="/eTicaret/admin/dashboard">Admin Paneli</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,8 +35,8 @@
 					<li class="nav-item"><a class="nav-link <%= currentURI.endsWith("kullanicilar.jsp") ? "active" : "" %>"
 						href="/eTicaret/admin/user/list">Kullanıcılar</a></li>
 				</ul>
-				<span class="text-white me-4">Fatih Çalışır</span>
-				<a class="btn btn-outline-light" href="#">Çıkış</a>
+				<span class="text-white me-4"><%=girisIsim %></span>
+				<a class="btn btn-outline-light" href="/eTicaret/login">Çıkış</a>
 			</div>
 		</div>
 	</nav>

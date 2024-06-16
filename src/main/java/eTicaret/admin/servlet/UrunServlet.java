@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.UrunDao;
 import eTicaret.admin.model.Urun;
+import eTicaret.admin.util.NavbarUtil;
 
 @WebServlet("/admin/product/*")
 public class UrunServlet extends HttpServlet {
@@ -27,6 +28,8 @@ public class UrunServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		NavbarUtil.setLoggedInUsername(req);
+		
 		String action = req.getPathInfo();
 		System.out.println("action(get): " + action);
 		if (action == null) {
