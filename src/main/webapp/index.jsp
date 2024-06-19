@@ -104,7 +104,6 @@
             </ul>
         </div>
         <div class="col-md-8">
-            <form action="cart" method="post">
                 <% connection = null;
                 PreparedStatement preparedStatement = null;
                 resultSet = null;
@@ -126,6 +125,7 @@
                         double price = resultSet.getDouble("urunFiyati");
                         int stock = resultSet.getInt("urunStokMiktari");
                         String description = resultSet.getString("urunAciklamasi");
+                        out.println("<form action=\"cart\" method=\"post\">");
                         out.println("<div class='product'>");
                         out.println("<h3>" + name + "</h3>");
                         out.println("<p>Fiyat: " + price + " TL</p>");
@@ -136,6 +136,7 @@
                         out.println("<input type='number' name='quantity' value='1' min='1'>");
                         out.println("<input type='submit' value='Sepete Ekle' class='btn btn-primary'>");
                         out.println("</div>");
+                        out.println("</form>");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -157,7 +158,6 @@
                     DatabaseConfiguration.closeConnection(connection);
                 }
                 %>
-            </form>
             <a href="sepet.jsp" class="btn btn-secondary">Sepete Git</a>
         </div>
     </div>
