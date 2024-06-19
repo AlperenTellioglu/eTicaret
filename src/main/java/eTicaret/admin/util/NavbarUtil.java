@@ -6,9 +6,10 @@ import javax.servlet.http.HttpSession;
 public class NavbarUtil {
 	
 	public static void setLoggedInUsername(HttpServletRequest req) {
+		
 		HttpSession session = req.getSession(false);
-		if (session != null && session.getAttribute("fullName") != null) {
-			String girisYapanIsim = (String) session.getAttribute("fullName");
+		if (session != null && session.getAttribute("kullaniciAdi") != null) {
+			String girisYapanIsim = (String) session.getAttribute("kullaniciAdi");
 			req.setAttribute("girisIsim", girisYapanIsim);
 		}
 	}
