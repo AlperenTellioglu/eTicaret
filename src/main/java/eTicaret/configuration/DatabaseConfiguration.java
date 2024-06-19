@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfiguration {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/eticaret";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/eticaret?useUnicode=true&characterEncoding=UTF-8";
     private static final String JDBC_USER = "eadmin";
     private static final String JDBC_PASSWORD = "1234";
 
