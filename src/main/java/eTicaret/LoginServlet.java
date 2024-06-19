@@ -42,14 +42,21 @@ public class LoginServlet extends HttpServlet {
 
             if (resultSet.next()) {
                 // Başarılı giriş durumunda session oluştur
-                
+            	String ad = resultSet.getString("ad");
+            	String soyad = resultSet.getString("soyad");
+            	int kullaniciId = resultSet.getInt("kullanici_id");
+            	
                 req.getSession().setAttribute("isLoggedIn", true);
-
+                req.getSession().setAttribute("kullaniciId", kullaniciId);
+                req.getSession().setAttribute("kullaniciAdi", ad +" "+ soyad);
+                
                 // Email içinde @ işaretinden önce admin varsa admin paneline yönlendir
                 if (email.toLowerCase().startsWith("admin@")) {
                     resp.sendRedirect("admin/dashboard");
+                    req.getSession().setAttribute("isAdmin", true);
                 } else {
                     resp.sendRedirect("index.jsp");
+                    req.getSession().setAttribute("isAdmin", false);
                 }
             } else {
                 resp.sendRedirect("login");
