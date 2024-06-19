@@ -28,6 +28,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
                     </form>
+                    <div class="text-center mt-3">
+                        <p>Hesabınız yok mu? <a href="register.jsp">Kayıt olun</a></p>
+                    </div>
                 </div>
             </div>
         </div>

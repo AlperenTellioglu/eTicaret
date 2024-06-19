@@ -3,6 +3,7 @@ package eTicaret;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -44,10 +45,29 @@ public class RegisterServlet extends HttpServlet {
 
 			int result = statement.executeUpdate();
 			conn.close();
-
+			 ResultSet resultSet = statement.executeQuery();
+			 int kullaniciId = resultSet.getInt("kullanici_id");
+			
 			if (result > 0) {
 				System.out.println("basarili kayıt");
-				resp.sendRedirect("admin/dashboard");
+				
+				if(email.toLowerCase().startsWith("admin@")) {
+					resp.sendRedirect("admin/dashboard");
+					
+                    req.getSession().setAttribute("isAdmin", true);
+                    req.getSession().setAttribute("kullaniciId", kullaniciId);
+                    req.getSession().setAttribute("kullaniciAdi", ad +" "+ soyad);
+				}
+				else {
+					resp.sendRedirect("index.jsp");
+					
+                    req.getSession().setAttribute("isAdmin", false);
+                    req.getSession().setAttribute("kullaniciId", kullaniciId);
+                    req.getSession().setAttribute("kullaniciAdi", ad +" "+ soyad);
+					
+				}
+				
+				
 			} else {
 				System.out.println("basarisiz kayıt");
 				resp.sendRedirect("register");

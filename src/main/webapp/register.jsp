@@ -36,6 +36,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </form>
+                    <div class="text-center mt-3">
+                        <p>Zaten kayıtlı mısınız? <a href="login.jsp">Giriş yapın</a></p>
+                    </div>
                 </div>
             </div>
         </div>
