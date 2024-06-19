@@ -23,8 +23,8 @@ import eTicaret.configuration.DatabaseConfiguration;
 @WebServlet("/cart")
 public class SepetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
@@ -38,38 +38,49 @@ public class SepetServlet extends HttpServlet {
                 cart = new ArrayList<>();
             }
 
-            Connection connection = null;
-            PreparedStatement preparedStatement = null;
-            ResultSet resultSet = null;
-            try {
-                connection = DatabaseConfiguration.getConnection();
-                String sql = "SELECT urunId, urunAdi, urunFiyati FROM urunler WHERE urunId = ?";
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, productId);
-                resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    String name = resultSet.getString("urunAdi");
-                    double price = resultSet.getDouble("urunFiyati");
-                    cart.add(new SepetItem(productId, name, price, quantity));
+            boolean productExists = false;
+            for (SepetItem item : cart) {
+                if (item.getProductId() == productId) {
+                    item.setQuantity(item.getQuantity() + quantity);
+                    productExists = true;
+                    break;
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                if (resultSet != null) {
-                    try {
-                        resultSet.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+            }
+
+            if (!productExists) {
+                Connection connection = null;
+                PreparedStatement preparedStatement = null;
+                ResultSet resultSet = null;
+                try {
+                    connection = DatabaseConfiguration.getConnection();
+                    String sql = "SELECT urunId, urunAdi, urunFiyati FROM urunler WHERE urunId = ?";
+                    preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setInt(1, productId);
+                    resultSet = preparedStatement.executeQuery();
+                    if (resultSet.next()) {
+                        String name = resultSet.getString("urunAdi");
+                        double price = resultSet.getDouble("urunFiyati");
+                        cart.add(new SepetItem(productId, name, price, quantity));
                     }
-                }
-                if (preparedStatement != null) {
-                    try {
-                        preparedStatement.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (resultSet != null) {
+                        try {
+                            resultSet.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    if (preparedStatement != null) {
+                        try {
+                            preparedStatement.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    DatabaseConfiguration.closeConnection(connection);
                 }
-                DatabaseConfiguration.closeConnection(connection);
             }
 
             session.setAttribute("cart", cart);
@@ -79,9 +90,5 @@ public class SepetServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doPost(request, response);
-    }
 
 }

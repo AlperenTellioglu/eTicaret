@@ -31,7 +31,7 @@ public class LogoutServlet extends HttpServlet {
         if (isAdmin) {
             response.sendRedirect("login");
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("index.jsp");
         }
     }
 

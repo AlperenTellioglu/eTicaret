@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.List" %>
 <%@ page import="eTicaret.SepetItem" %>
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,7 @@
             }
             out.println("</table>");
             out.println("<p>Toplam: " + total + " TL</p>");
-            out.println("<form action='checkout.jsp' method='post'><input type='submit' value='Satın Al'></form>");
+            out.println("<form action='odeme.jsp' method='post'><input type='submit' value='Satın Al'></form>");
         } else {
             out.println("<p>Sepetiniz boş.</p>");
         }

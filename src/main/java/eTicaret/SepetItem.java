@@ -2,7 +2,7 @@ package eTicaret;
 
 public class SepetItem {
 
-	private int productId;
+    private int productId;
     private String name;
     private double price;
     private int quantity;
