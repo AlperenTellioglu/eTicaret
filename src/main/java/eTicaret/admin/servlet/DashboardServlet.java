@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
 
-import eTicaret.admin.util.MockAuthUtil;
+import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 
 @WebServlet(urlPatterns = {"/admin/","/admin/dashboard"})
@@ -28,12 +28,12 @@ public class DashboardServlet extends HttpServlet {
 //		Boolean a = (Boolean)s.getAttribute("isLoggedIn");
 //		System.out.println("Is logged in:" + a);
 		
-		if (!MockAuthUtil.isLoggedIn(req)) {
+		if (!AuthUtil.isLoggedIn(req)) {
 			resp.sendRedirect("/eTicaret/login");
 			return;
 		}
 		
-		if (!MockAuthUtil.isAdmin(req)) {
+		if (!AuthUtil.isAdmin(req)) {
 			resp.sendRedirect("/eTicaret/");
 			return;
         }

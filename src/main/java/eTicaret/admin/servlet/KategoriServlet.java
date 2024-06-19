@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.KategoriDao;
 import eTicaret.admin.model.Kategori;
-import eTicaret.admin.util.MockAuthUtil;
+import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 
 @WebServlet("/admin/category/*")
@@ -34,12 +34,12 @@ public class KategoriServlet extends HttpServlet {
 		
 		NavbarUtil.setLoggedInUsername(req);
 		
-		if (!MockAuthUtil.isLoggedIn(req)) {
+		if (!AuthUtil.isLoggedIn(req)) {
 			resp.sendRedirect("/eTicaret/login");
 			return;
 		}
 		
-		if (!MockAuthUtil.isAdmin(req)) {
+		if (!AuthUtil.isAdmin(req)) {
 			resp.sendRedirect("/eTicaret/");
 			return;
         }

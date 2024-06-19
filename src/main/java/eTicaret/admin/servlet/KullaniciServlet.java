@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.KullaniciDao;
 import eTicaret.admin.model.Kullanici;
-import eTicaret.admin.util.MockAuthUtil;
+import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 
 @WebServlet("/admin/user/*")
@@ -33,12 +33,12 @@ public class KullaniciServlet extends HttpServlet {
 
 		NavbarUtil.setLoggedInUsername(req);
 		
-		if (!MockAuthUtil.isLoggedIn(req)) {
+		if (!AuthUtil.isLoggedIn(req)) {
 			resp.sendRedirect("/eTicaret/login");
 			return;
 		}
 		
-		if (!MockAuthUtil.isAdmin(req)) {
+		if (!AuthUtil.isAdmin(req)) {
 			resp.sendRedirect("/eTicaret/");
 			return;
         }
