@@ -1,6 +1,7 @@
 package eTicaret.admin.servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,21 +12,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.KullaniciDao;
+import eTicaret.admin.dao.SiparisDao;
 import eTicaret.admin.model.Kullanici;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
+import eTicaret.configuration.DatabaseConfiguration;
 
 @WebServlet("/admin/user/*")
 public class KullaniciServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1112806690048086911L;
 	private KullaniciDao kullaniciDao;
+	private Connection conn;
 
 	@Override
 	public void init() throws ServletException {
-		kullaniciDao = new KullaniciDao();
+		try {
+			conn = DatabaseConfiguration.getConnection();
+			kullaniciDao = new KullaniciDao(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("[SiparisServlet][init] Error: " + e.getMessage());
+		}
 	}
 
+	@Override
+	public void destroy() {
+		try {
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");

@@ -17,9 +17,14 @@ public class KategoriDao {
 	private static final String DELETE_KATEGORI_SQL = "DELETE FROM kategoriler WHERE kategoriId = ?;";
 	private static final String UPDATE_KATEGORI_SQL = "UPDATE kategoriler SET kategoriAdi = ? WHERE kategoriId = ?;";
 
+	private Connection connection;
+	
+	public KategoriDao(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public void create(Kategori kategori) throws SQLException {
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_KATEGORI_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_KATEGORI_SQL)) {
 			preparedStatement.setString(1, kategori.getAd());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -29,8 +34,7 @@ public class KategoriDao {
 
 	public Kategori read(int id) {
 		Kategori kategori = null;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_KATEGORI_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_KATEGORI_SQL)) {
 			preparedStatement.setInt(1, id);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -46,8 +50,7 @@ public class KategoriDao {
 
 	public List<Kategori> list() {
 		List<Kategori> kategoriler = new ArrayList<>();
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_KATEGORI_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_KATEGORI_SQL)) {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -63,8 +66,7 @@ public class KategoriDao {
 
 	public boolean delete(int id) throws SQLException {
 		boolean rowDeleted;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_KATEGORI_SQL)) {
+		try (PreparedStatement statement = connection.prepareStatement(DELETE_KATEGORI_SQL)) {
 			statement.setInt(1, id);
 			rowDeleted = statement.executeUpdate() > 0;
 		}
@@ -73,8 +75,7 @@ public class KategoriDao {
 
 	public boolean update(Kategori kategori) throws SQLException {
 		boolean rowUpdated;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_KATEGORI_SQL)) {
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_KATEGORI_SQL)) {
 			statement.setString(1, kategori.getAd());
 			statement.setInt(2, kategori.getId());
 			rowUpdated = statement.executeUpdate() > 0;

@@ -1,3 +1,7 @@
+<%@page import="eTicaret.admin.model.Odeme"%>
+<%@page import="eTicaret.admin.model.Urun"%>
+<%@page import="eTicaret.admin.model.SiparisForm"%>
+<%@page import="eTicaret.admin.model.Kullanici"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +17,8 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 
-<title>${siparis == null ? 'Yeni Sipariş Ekle' : 'Sipariş Düzenle'} - Admin Paneli</title>
+<title>${siparis == null ? 'Yeni Sipariş Ekle' : 'Sipariş Düzenle'}
+	- Admin Paneli</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/admin.css">
 </head>
@@ -28,16 +33,42 @@
 				value="${siparis == null ? 'insert' : 'edit'}"> <input
 				type="hidden" name="siparisId" value="${siparis.getId()}">
 			<div class="form-group">
-				<label for="kullanici_id">Kullanıcı Id</label> <input type="number" name="kullanici_id"
-					class="form-control" value="${siparis.getKullaniciId()}">
+			 <label for="kullanici_id">Kullanıcı [id]</label>
+				<select class="form-control" id="kullanici_id" name="kullanici_id">
+					<%
+					SiparisForm siparisForm = (SiparisForm) request.getAttribute("siparisForm");
+					for (Kullanici kullanici : siparisForm.getKullanicilar()) {
+					%>
+					<option value="<%=kullanici.getId()%>"><%=kullanici.getAd()%>
+						<%=kullanici.getSoyad()%> [<%=kullanici.getId()%>]</option>
+					<%
+					}
+					%>
+				</select>
 			</div>
 			<div class="form-group">
-				<label for="urunId">Urun Id</label> <input type="number" name="urunId"
-					class="form-control" value="${siparis.getUrunId()}">
+				<label for="urunId">Urun [id]</label> 
+				<select class="form-control" id="urunId" name="urunId">
+					<%
+					for (Urun urun : siparisForm.getUrunler()) {
+					%>
+					<option value="<%=urun.getId()%>"><%=urun.getAd()%> [<%=urun.getId()%>]</option>
+					<%
+					}
+					%>
+				</select>
 			</div>
 			<div class="form-group">
-				<label for="odemeId">Odeme Id</label> <input type="number" name="odemeId"
-					class="form-control" value="${siparis.getOdemeId()}">
+				<label for="odemeId">Odeme [id]</label> 
+				<select class="form-control" id="odemeId" name="odemeId">
+					<%
+					for (Odeme odeme : siparisForm.getOdemeler()) {
+					%>
+					<option value="<%=odeme.getId()%>"><%=odeme.getOdemeTuru()%> [<%=odeme.getId()%>]</option>
+					<%
+					}
+					%>
+				</select>
 			</div>
 			<div class="form-group">
 				<label for="adet">Adet</label> <input type="number" name="adet"
@@ -45,7 +76,8 @@
 			</div>
 			<div class="form-group">
 				<label for="siparisTarih">Sipariş Tarihi</label> <input type="date"
-					name="siparisTarih" class="form-control" value="${siparis.getSiparisTarih()}">
+					name="siparisTarih" class="form-control"
+					value="${siparis.getSiparisTarih()}">
 			</div>
 
 			<div class="row my-5">

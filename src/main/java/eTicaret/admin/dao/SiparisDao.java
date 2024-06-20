@@ -8,8 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import eTicaret.admin.model.Kullanici;
+import eTicaret.admin.model.Odeme;
 import eTicaret.admin.model.Siparis;
 import eTicaret.admin.model.SiparisForm;
+import eTicaret.admin.model.Urun;
+import eTicaret.configuration.DatabaseConfiguration;
 
 public class SiparisDao {
 
@@ -140,9 +144,16 @@ public class SiparisDao {
 		}
 		return null;
 	}
-	
-	// TODO formdaki dropdownlari doldurmak icin bu fonksiyonu implemente et
-	public SiparisForm getForm(){
-		return null;
+
+	public SiparisForm getForm() {
+		UrunDao urunDao = new UrunDao(connection);
+		KullaniciDao kullaniciDao = new KullaniciDao(connection);
+		OdemeDao odemeDao = new OdemeDao(connection);
+		
+		List<Urun> urunler = urunDao.list();
+		List<Kullanici> kullanicilar = kullaniciDao.list();
+		List<Odeme> odemeler = odemeDao.list();
+
+		return new SiparisForm(kullanicilar, urunler, odemeler);
 	}
 }

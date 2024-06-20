@@ -1,6 +1,7 @@
 package eTicaret.admin.servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import eTicaret.admin.dao.UrunDao;
 import eTicaret.admin.model.Urun;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
+import eTicaret.configuration.DatabaseConfiguration;
 
 @WebServlet("/admin/product/*")
 public class UrunServlet extends HttpServlet {
@@ -21,29 +23,47 @@ public class UrunServlet extends HttpServlet {
 	private static final long serialVersionUID = 5607346776180865194L;
 
 	private UrunDao urunDao;
+	private Connection conn;
 
 	@Override
 	public void init() throws ServletException {
-		urunDao = new UrunDao();
+		try {
+			conn = DatabaseConfiguration.getConnection();
+			urunDao = new UrunDao(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("[SiparisServlet][init] Error: " + e.getMessage());
+		}
+	}
+
+	@Override
+	public void destroy() {
+		try {
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
-		
+
 		NavbarUtil.setLoggedInUsername(req);
-		
+
 		if (!AuthUtil.isLoggedIn(req)) {
 			resp.sendRedirect("/eTicaret/login");
 			return;
 		}
-		
+
 		if (!AuthUtil.isAdmin(req)) {
 			resp.sendRedirect("/eTicaret/");
 			return;
-        }
-		
+		}
+
 		String action = req.getPathInfo();
 		System.out.println("action(get): " + action);
 		if (action == null) {
@@ -72,7 +92,7 @@ public class UrunServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
-		
+
 		String action = req.getParameter("action");
 		System.out.println("action(post): " + action);
 
@@ -130,7 +150,7 @@ public class UrunServlet extends HttpServlet {
 	private void update(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
 		System.out.println("update: pre");
 		int id = Integer.parseInt(req.getParameter("urunId"));
-		System.out.println("update: id=" +String.valueOf(id));
+		System.out.println("update: id=" + String.valueOf(id));
 		String ad = req.getParameter("ad");
 		String aciklama = req.getParameter("aciklama");
 		double fiyat = Double.parseDouble(req.getParameter("fiyat"));

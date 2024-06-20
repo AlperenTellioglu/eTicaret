@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.SiparisDao;
 import eTicaret.admin.model.Siparis;
+import eTicaret.admin.model.SiparisForm;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 import eTicaret.configuration.DatabaseConfiguration;
@@ -128,8 +129,9 @@ public class SiparisServlet extends HttpServlet {
 		req.setAttribute("siparisler", siparisler);
 		req.getRequestDispatcher("/admin/siparis/siparisler.jsp").forward(req, resp);
 	}
-	
-	private void search(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+
+	private void search(HttpServletRequest req, HttpServletResponse resp)
+			throws SQLException, IOException, ServletException {
 		String sorgu = req.getParameter("sorgu");
 		List<Siparis> siparisler = siparisDao.search(sorgu);
 		req.setAttribute("siparisler", siparisler);
@@ -137,14 +139,22 @@ public class SiparisServlet extends HttpServlet {
 	}
 
 	private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		SiparisForm formData = siparisDao.getForm();
+		req.setAttribute("siparisForm", formData);
+		
 		req.getRequestDispatcher("/admin/siparis/siparisform.jsp").forward(req, resp);
 	}
 
 	private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
 			throws SQLException, ServletException, IOException {
+		
+		SiparisForm formData = siparisDao.getForm();
+		req.setAttribute("siparisForm", formData);
+		
 		int id = Integer.parseInt(req.getParameter("siparisId"));
 		Siparis eskiSiparis = siparisDao.read(id);
 		req.setAttribute("siparis", eskiSiparis);
+		
 		req.getRequestDispatcher("/admin/siparis/siparisform.jsp").forward(req, resp);
 	}
 
@@ -155,7 +165,7 @@ public class SiparisServlet extends HttpServlet {
 		int odemeId = Integer.parseInt(req.getParameter("odemeId"));
 		int adet = Integer.parseInt(req.getParameter("adet"));
 		String siparisTarihString = req.getParameter("siparisTarih");
-		
+
 		try {
 			Date siparisTarih = Date.valueOf(siparisTarihString);
 
@@ -164,8 +174,7 @@ public class SiparisServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("[SiparisServlet][create] Error: " + e.getMessage());
-		}
-		finally {			
+		} finally {
 			resp.sendRedirect("list");
 		}
 	}
@@ -177,7 +186,7 @@ public class SiparisServlet extends HttpServlet {
 		int odemeId = Integer.parseInt(req.getParameter("odemeId"));
 		int adet = Integer.parseInt(req.getParameter("adet"));
 		String siparisTarihString = req.getParameter("siparisTarih");
-		
+
 		try {
 			Date siparisTarih = Date.valueOf(siparisTarihString);
 
@@ -186,8 +195,7 @@ public class SiparisServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("[SiparisServlet][update] Error: " + e.getMessage());
-		}
-		finally {			
+		} finally {
 			resp.sendRedirect("list");
 		}
 	}

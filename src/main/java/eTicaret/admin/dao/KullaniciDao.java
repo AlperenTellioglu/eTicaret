@@ -13,13 +13,18 @@ import eTicaret.configuration.DatabaseConfiguration;
 public class KullaniciDao {
 	private static final String INSERT_KULLANICI_SQL = "INSERT INTO kullanicilar (ad, soyad, email, password) VALUES (?, ?, ?, ?)";
 	private static final String SELECT_KULLANICI_SQL = "SELECT kullanici_id, ad, soyad, email, password FROM kullanicilar WHERE kullanici_id = ?";
-	private static final String LS_ALL_KULLANICI_SQL = "SELECT * FROM kullanicilar";
+	public static final String LS_ALL_KULLANICI_SQL = "SELECT * FROM kullanicilar";
 	private static final String DELETE_KULLANICI_SQL = "DELETE FROM kullanicilar WHERE kullanici_id = ?";
 	private static final String UPDATE_KULLANICI_SQL = "UPDATE kullanicilar SET ad = ?, soyad = ?, email = ?, password = ? WHERE kullanici_id = ?";
 
+	private Connection connection;
+	
+	public KullaniciDao(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public void create(Kullanici kullanici) throws SQLException {
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_KULLANICI_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_KULLANICI_SQL)) {
 			preparedStatement.setString(1, kullanici.getAd());
 			preparedStatement.setString(2, kullanici.getSoyad());
 			preparedStatement.setString(3, kullanici.getEmail());
@@ -32,8 +37,7 @@ public class KullaniciDao {
 
 	public Kullanici read(int id) {
 		Kullanici kullanici = null;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_KULLANICI_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_KULLANICI_SQL)) {
 			preparedStatement.setInt(1, id);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -52,8 +56,7 @@ public class KullaniciDao {
 
 	public List<Kullanici> list() {
 		List<Kullanici> kullanicilar = new ArrayList<>();
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_KULLANICI_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_KULLANICI_SQL)) {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -72,8 +75,7 @@ public class KullaniciDao {
 
 	public boolean delete(int id) throws SQLException {
 		boolean rowDeleted;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_KULLANICI_SQL)) {
+		try (PreparedStatement statement = connection.prepareStatement(DELETE_KULLANICI_SQL)) {
 			statement.setInt(1, id);
 			rowDeleted = statement.executeUpdate() > 0;
 		}
@@ -82,8 +84,7 @@ public class KullaniciDao {
 
 	public boolean update(Kullanici kullanici) throws SQLException {
 		boolean rowUpdated;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_KULLANICI_SQL)) {
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_KULLANICI_SQL)) {
 			statement.setString(1, kullanici.getAd());
 			statement.setString(2, kullanici.getSoyad());
 			statement.setString(3, kullanici.getEmail());

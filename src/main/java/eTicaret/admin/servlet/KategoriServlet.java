@@ -1,6 +1,7 @@
 package eTicaret.admin.servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,22 +12,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.KategoriDao;
+import eTicaret.admin.dao.SiparisDao;
 import eTicaret.admin.model.Kategori;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
+import eTicaret.configuration.DatabaseConfiguration;
 
 @WebServlet("/admin/category/*")
 public class KategoriServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9071732025782103106L;
 	
+	private Connection conn;
 	private KategoriDao kategoriDao;
 
 	@Override
 	public void init() throws ServletException {
-		kategoriDao = new KategoriDao();
+		try {
+			conn = DatabaseConfiguration.getConnection();
+			kategoriDao = new KategoriDao(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("[SiparisServlet][init] Error: " + e.getMessage());
+		}
 	}
 
+	@Override
+	public void destroy() {
+		try {
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");

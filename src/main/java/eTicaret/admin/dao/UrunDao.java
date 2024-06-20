@@ -13,13 +13,18 @@ import eTicaret.configuration.DatabaseConfiguration;
 public class UrunDao {
 	private static final String INSERT_URUN_SQL = "INSERT INTO urunler (urunAdi, urunAciklamasi, urunFiyati, urunStokMiktari, kategoriId) VALUES (?, ?, ?, ?, ?);";
 	private static final String SELECT_URUN_SQL = "SELECT urunId, urunAdi, urunAciklamasi, urunFiyati, urunStokMiktari, kategoriId FROM urunler WHERE urunId = ?;";
-	private static final String LS_ALL_URUN_SQL = "SELECT * FROM urunler;";
+	public static final String LS_ALL_URUN_SQL = "SELECT * FROM urunler;";
 	private static final String DELETE_URUN_SQL = "DELETE FROM urunler WHERE urunId = ?;";
 	private static final String UPDATE_URUN_SQL = "UPDATE urunler SET urunAdi = ?, urunAciklamasi = ?, urunFiyati = ?, urunStokMiktari = ?, kategoriId = ? WHERE urunId = ?;";
 
+	Connection connection;
+	
+	public UrunDao(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public void create(Urun urun) throws SQLException {
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_URUN_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_URUN_SQL)) {
 			preparedStatement.setString(1, urun.getAd());
 			preparedStatement.setString(2, urun.getAciklama());
 			preparedStatement.setDouble(3, urun.getFiyat());
@@ -33,8 +38,7 @@ public class UrunDao {
 
 	public Urun read(int id) {
 		Urun urun = null;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_URUN_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_URUN_SQL)) {
 			preparedStatement.setInt(1, id);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -54,8 +58,7 @@ public class UrunDao {
 
 	public List<Urun> list() {
 		List<Urun> urunler = new ArrayList<>();
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_URUN_SQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(LS_ALL_URUN_SQL)) {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -75,8 +78,7 @@ public class UrunDao {
 
 	public boolean delete(int id) throws SQLException {
 		boolean rowDeleted;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_URUN_SQL)) {
+		try (PreparedStatement statement = connection.prepareStatement(DELETE_URUN_SQL)) {
 			statement.setInt(1, id);
 			rowDeleted = statement.executeUpdate() > 0;
 		}
@@ -85,8 +87,7 @@ public class UrunDao {
 
 	public boolean update(Urun urun) throws SQLException {
 		boolean rowUpdated;
-		try (Connection connection = DatabaseConfiguration.getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_URUN_SQL)) {
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_URUN_SQL)) {
 			statement.setString(1, urun.getAd());
 			statement.setString(2, urun.getAciklama());
 			statement.setDouble(3, urun.getFiyat());
