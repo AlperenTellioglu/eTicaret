@@ -1,3 +1,4 @@
+<%@page import="eTicaret.admin.model.Siparis"%>
 <%@page import="eTicaret.admin.model.Odeme"%>
 <%@page import="eTicaret.admin.model.Urun"%>
 <%@page import="eTicaret.admin.model.SiparisForm"%>
@@ -33,38 +34,56 @@
 				value="${siparis == null ? 'insert' : 'edit'}"> <input
 				type="hidden" name="siparisId" value="${siparis.getId()}">
 			<div class="form-group">
-			 <label for="kullanici_id">Kullanıcı [id]</label>
-				<select class="form-control" id="kullanici_id" name="kullanici_id">
+				<label for="kullanici_id">Kullanıcı</label> <select
+					class="form-select" id="kullanici_id" name="kullanici_id">
 					<%
 					SiparisForm siparisForm = (SiparisForm) request.getAttribute("siparisForm");
-					for (Kullanici kullanici : siparisForm.getKullanicilar()) {
+					Siparis siparis = (Siparis) request.getAttribute("siparis");
+						
+					for (Kullanici k : siparisForm.getKullanicilar()) {
+						boolean isSelected = false;
+						if (siparis != null) {
+							isSelected = k.getId() == siparis.getKullaniciId();
+						}
 					%>
-					<option value="<%=kullanici.getId()%>"><%=kullanici.getAd()%>
-						<%=kullanici.getSoyad()%> [<%=kullanici.getId()%>]</option>
+					<option value="<%=k.getId()%>" <%=isSelected ? "selected" : ""%>>[<%=k.getId()%>]
+						<%=k.getAd()%>
+						<%=k.getSoyad()%>
+					</option>
 					<%
 					}
 					%>
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="urunId">Urun [id]</label> 
-				<select class="form-control" id="urunId" name="urunId">
+				<label for="urunId">Urun</label> <select class="form-select"
+					id="urunId" name="urunId">
 					<%
 					for (Urun urun : siparisForm.getUrunler()) {
+						boolean isSelected = false;
+						if (siparis != null) {
+							isSelected = urun.getId() == siparis.getUrunId();
+						}
 					%>
-					<option value="<%=urun.getId()%>"><%=urun.getAd()%> [<%=urun.getId()%>]</option>
+					<option value="<%=urun.getId()%>" <%=isSelected ? "selected" : ""%>>[<%=urun.getId()%>]
+						<%=urun.getAd()%></option>
 					<%
 					}
 					%>
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="odemeId">Odeme [id]</label> 
-				<select class="form-control" id="odemeId" name="odemeId">
+				<label for="odemeId">Odeme</label> <select class="form-select"
+					id="odemeId" name="odemeId">
 					<%
 					for (Odeme odeme : siparisForm.getOdemeler()) {
+						boolean isSelected = false;
+						if (siparis != null) {
+							isSelected = odeme.getId() == siparis.getOdemeId();
+						}
 					%>
-					<option value="<%=odeme.getId()%>"><%=odeme.getOdemeTuru()%> [<%=odeme.getId()%>]</option>
+					<option value="<%=odeme.getId()%>" <%=isSelected ? "selected" : ""%>>[<%=odeme.getId()%>]
+						<%=odeme.getOdemeTuru()%></option>
 					<%
 					}
 					%>

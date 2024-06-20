@@ -35,7 +35,7 @@
 				<form action="/eTicaret/admin/order/search" method="get">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" name="sorgu"
-							placeholder="Kullanıcı ID, ürün ID, ödeme ID"
+							placeholder="Ad, Soyad, Ürün Adı, Ödeme Türü"
 							aria-label="Recipient's username" aria-describedby="basic-addon2">
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="submit">Ara</button>
