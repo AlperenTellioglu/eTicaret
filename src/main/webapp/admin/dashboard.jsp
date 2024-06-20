@@ -44,6 +44,12 @@
 						Ekle</button>
 				</form>
 			</div>
+			<div class="col text-center">
+				<form action="/eTicaret/admin/order/add" method="get">
+					<button class="btn btn-primary dashboard-button" type="submit">Sipariş
+						Ekle</button>
+				</form>
+			</div>
 			<div class="col"></div>
 		</div>
 	</div>

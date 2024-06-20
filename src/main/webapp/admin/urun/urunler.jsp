@@ -31,6 +31,16 @@
 			<div class="col">
 				<a class="btn btn-secondary" href="/eTicaret/admin/dashboard">Geri</a>
 			</div>
+						<div class="col">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control"
+						placeholder="Ürün ID, Ürün Adı, Kategori Adı"
+						aria-label="Recipient's username" aria-describedby="basic-addon2">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button">Ara</button>
+					</div>
+				</div>
+			</div>
 			<div class="col text-end">
 				<a class="btn btn-primary" href="/eTicaret/admin/product/add">Ürün
 					Ekle</a>

@@ -1,5 +1,5 @@
+<%@page import="eTicaret.admin.model.Siparis"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="eTicaret.admin.model.Kullanici"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!doctype html>
@@ -16,7 +16,7 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 
-<title>Kullanıcılar - Admin Paneli</title>
+<title>Siparişler - Admin Paneli</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/admin.css">
 </head>
@@ -24,7 +24,7 @@
 	<%@ include file="/admin/navbar.jsp"%>
 
 	<div class="container pt-4">
-		<h1 class="display-6">Kullanıcılar</h1>
+		<h1 class="display-6">Siparişler</h1>
 		<hr class="mb-4">
 
 		<div class="row mb-4">
@@ -32,17 +32,19 @@
 				<a class="btn btn-secondary" href="/eTicaret/admin/dashboard">Geri</a>
 			</div>
 			<div class="col">
-				<div class="input-group mb-3">
-					<input type="text" class="form-control"
-						placeholder="Kullanıcı ID, Ad, Soyad, Email"
-						aria-label="Recipient's username" aria-describedby="basic-addon2">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button">Ara</button>
+				<form action="/eTicaret/admin/order/search" method="get">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" name="sorgu"
+							placeholder="Kullanıcı ID, ürün ID, ödeme ID"
+							aria-label="Recipient's username" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit">Ara</button>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 			<div class="col text-end">
-				<a class="btn btn-primary" href="/eTicaret/admin/user/add">Kullanıcı
+				<a class="btn btn-primary" href="/eTicaret/admin/order/add">Sipariş
 					Ekle</a>
 			</div>
 		</div>
@@ -50,32 +52,34 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">ID</th>
-					<th scope="col">Ad</th>
-					<th scope="col">Soyad</th>
-					<th scope="col">Email</th>
-					<th scope="col">Şifre</th>
+					<th scope="col">Sipariş Id</th>
+					<th scope="col">Kullanıcı [id]</th>
+					<th scope="col">Ürün [id]</th>
+					<th scope="col">Ödeme [id]</th>
+					<th scope="col">Adet</th>
+					<th scope="col">Sipariş Tarihi</th>
 					<th scope="col" class="text-end" style="width: 15%;"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<%
-				Object obj = request.getAttribute("kullanicilar");
+				Object obj = request.getAttribute("siparisler");
 				if (obj instanceof ArrayList<?>) {
 					List<?> objeler = (List<?>) obj;
 
 					for (Object obje : objeler) {
-						if (obje instanceof Kullanici) {
-					Kullanici kullanici = (Kullanici) obje;
+						if (obje instanceof Siparis) {
+					Siparis siparis = (Siparis) obje;
 				%>
 				<tr>
-					<th scope="row" class="align-middle"><%=kullanici.getId()%></th>
-					<td class="align-middle"><%=kullanici.getAd()%></td>
-					<td class="align-middle"><%=kullanici.getSoyad()%></td>
-					<td class="align-middle"><%=kullanici.getEmail()%></td>
-					<td class="align-middle"><%=kullanici.getPassword()%></td>
+					<th scope="row" class="align-middle"><%=siparis.getId()%></th>
+					<td class="align-middle"><%=siparis.getKullaniciAdi() + " " + siparis.getKullaniciSoyadi() + " [" + siparis.getKullaniciId() + "]"%></td>
+					<td class="align-middle"><%=siparis.getUrunAdi() + " [" + siparis.getUrunId() + "]"%></td>
+					<td class="align-middle"><%=siparis.getOdemeTuru() + " [" + siparis.getOdemeId() + "]"%></td>
+					<td class="align-middle"><%=siparis.getAdet()%></td>
+					<td class="align-middle"><%=siparis.getSiparisTarih()%></td>
 					<td class="text-end">
-						<form action="/eTicaret/admin/user/update" method="get"
+						<form action="/eTicaret/admin/order/update" method="get"
 							class="d-inline">
 							<button type="submit" class="btn btn-warning edit-button">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -84,10 +88,10 @@
 										d="M3 21h18v2H3v-2zm3.89-2.49l2.29-.57 12.32-12.33a2.51 2.51 0 0 0 0-3.54l-.56-.56a2.51 2.51 0 0 0-3.54 0L5.59 14.33l-.57 2.29a1.25 1.25 0 0 0 1.87 1.87zm2.3-3.09L18.11 3.89a.75.75 0 0 1 1.06 0l.56.56a.75.75 0 0 1 0 1.06L7.81 15.11l-1.13.28.28-1.13z" />
                         </svg>
 							</button>
-							<input type="hidden" name="kullanici_id"
-								value="<%=kullanici.getId()%>">
+							<input type="hidden" name="siparisId"
+								value="<%=siparis.getId()%>">
 						</form>
-						<form action="/eTicaret/admin/user/" method="post"
+						<form action="/eTicaret/admin/order/delete" method="post"
 							class="d-inline">
 							<button type="submit" class="btn btn-danger delete-button">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -97,7 +101,7 @@
                         </svg>
 							</button>
 							<input type="hidden" name="action" value="delete"> <input
-								type="hidden" name="kullanici_id" value="<%=kullanici.getId()%>">
+								type="hidden" name="siparisId" value="<%=siparis.getId()%>">
 
 						</form>
 					</td>
