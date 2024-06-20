@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import eTicaret.admin.dao.KategoriDao;
 import eTicaret.admin.dao.SiparisDao;
 import eTicaret.admin.model.Kategori;
+import eTicaret.admin.model.Urun;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 import eTicaret.configuration.DatabaseConfiguration;
@@ -79,6 +80,9 @@ public class KategoriServlet extends HttpServlet {
 			case "/update":
 				showEditForm(req, resp);
 				break;
+			case "/search":
+				search(req, resp);
+				break;
 			case "/list":
 			default:
 				list(req, resp);
@@ -125,6 +129,14 @@ public class KategoriServlet extends HttpServlet {
 		req.getRequestDispatcher("/admin/kategori/kategoriler.jsp").forward(req, resp);
 	}
 
+	private void search(HttpServletRequest req, HttpServletResponse resp)
+			throws SQLException, IOException, ServletException {
+		String sorgu = req.getParameter("sorgu");
+		List<Kategori> kategoriler = kategoriDao.search(sorgu);
+		req.setAttribute("kategoriler", kategoriler);
+		req.getRequestDispatcher("/admin/kategori/kategoriler.jsp").forward(req, resp);
+	}
+	
 	private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("/admin/kategori/kategoriform.jsp").forward(req, resp);
 	}

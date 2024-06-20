@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import eTicaret.admin.dao.KullaniciDao;
 import eTicaret.admin.dao.SiparisDao;
 import eTicaret.admin.model.Kullanici;
+import eTicaret.admin.model.Urun;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 import eTicaret.configuration.DatabaseConfiguration;
@@ -78,6 +79,9 @@ public class KullaniciServlet extends HttpServlet {
 			case "/update":
 				showEditForm(req, resp);
 				break;
+			case "/search":
+				search(req,resp);
+				break;
 			case "/list":
 			default:
 				list(req, resp);
@@ -121,6 +125,15 @@ public class KullaniciServlet extends HttpServlet {
 			throws SQLException, IOException, ServletException {
 		List<Kullanici> kullanicilar = kullaniciDao.list();
 		req.setAttribute("kullanicilar", kullanicilar);
+		req.getRequestDispatcher("/admin/kullanici/kullanicilar.jsp").forward(req, resp);
+	}
+	
+	private void search(HttpServletRequest req, HttpServletResponse resp)
+			throws SQLException, IOException, ServletException {
+		String sorgu = req.getParameter("sorgu");
+		List<Kullanici> kullanicilar = kullaniciDao.search(sorgu);
+		req.setAttribute("kullanicilar", kullanicilar);
+		
 		req.getRequestDispatcher("/admin/kullanici/kullanicilar.jsp").forward(req, resp);
 	}
 

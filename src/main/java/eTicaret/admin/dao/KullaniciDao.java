@@ -16,7 +16,8 @@ public class KullaniciDao {
 	public static final String LS_ALL_KULLANICI_SQL = "SELECT * FROM kullanicilar";
 	private static final String DELETE_KULLANICI_SQL = "DELETE FROM kullanicilar WHERE kullanici_id = ?";
 	private static final String UPDATE_KULLANICI_SQL = "UPDATE kullanicilar SET ad = ?, soyad = ?, email = ?, password = ? WHERE kullanici_id = ?";
-
+	private static final String SEARCH_KULLANICI_SQL = "SELECT * FROM kullanicilar WHERE ad LIKE ? OR soyad LIKE ? OR email LIKE ?";
+	
 	private Connection connection;
 	
 	public KullaniciDao(Connection connection) {
@@ -72,6 +73,28 @@ public class KullaniciDao {
 		}
 		return kullanicilar;
 	}
+	
+	public List<Kullanici> search(String sorgu) throws SQLException {
+        List<Kullanici> kullanicilar = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SEARCH_KULLANICI_SQL)) {
+            String esnekSorgu = "%" + sorgu + "%";
+            statement.setString(1, esnekSorgu);
+            statement.setString(2, esnekSorgu);
+            statement.setString(3, esnekSorgu);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("kullanici_id");
+                    String ad = resultSet.getString("ad");
+                    String soyad = resultSet.getString("soyad");
+                    String email = resultSet.getString("email");
+                    String password = resultSet.getString("password");
+                    Kullanici kullanici = new Kullanici(id, ad, soyad, email, password);
+                    kullanicilar.add(kullanici);
+                }
+            }
+        }
+        return kullanicilar;
+    }
 
 	public boolean delete(int id) throws SQLException {
 		boolean rowDeleted;

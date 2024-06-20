@@ -16,6 +16,7 @@ public class KategoriDao {
 	private static final String LS_ALL_KATEGORI_SQL = "SELECT * FROM kategoriler;";
 	private static final String DELETE_KATEGORI_SQL = "DELETE FROM kategoriler WHERE kategoriId = ?;";
 	private static final String UPDATE_KATEGORI_SQL = "UPDATE kategoriler SET kategoriAdi = ? WHERE kategoriId = ?;";
+	private static final String SEARCH_KATEGORI_SQL = "SELECT * FROM kategoriler WHERE kategoriAdi LIKE ?;";
 
 	private Connection connection;
 	
@@ -63,6 +64,24 @@ public class KategoriDao {
 		}
 		return kategoriler;
 	}
+	
+    public List<Kategori> search(String sorgu) throws SQLException {
+        List<Kategori> kategoriler = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SEARCH_KATEGORI_SQL)) {
+            String esnekSorgu = "%" + sorgu + "%";
+            statement.setString(1, esnekSorgu);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("kategoriId");
+                    String ad = resultSet.getString("kategoriAdi");
+                    Kategori kategori = new Kategori(id, ad);
+                    kategoriler.add(kategori);
+                }
+            }
+        }
+        return kategoriler;
+    }
 
 	public boolean delete(int id) throws SQLException {
 		boolean rowDeleted;
