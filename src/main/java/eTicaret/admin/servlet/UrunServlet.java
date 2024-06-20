@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import eTicaret.admin.dao.UrunDao;
+import eTicaret.admin.model.Kategori;
+import eTicaret.admin.model.Siparis;
+import eTicaret.admin.model.SiparisForm;
 import eTicaret.admin.model.Urun;
+import eTicaret.admin.model.UrunForm;
 import eTicaret.admin.util.AuthUtil;
 import eTicaret.admin.util.NavbarUtil;
 import eTicaret.configuration.DatabaseConfiguration;
@@ -78,6 +82,9 @@ public class UrunServlet extends HttpServlet {
 			case "/update":
 				showEditForm(req, resp);
 				break;
+			case "/search":
+				search(req, resp);
+				break;
 			case "/list":
 			default:
 				list(req, resp);
@@ -123,16 +130,31 @@ public class UrunServlet extends HttpServlet {
 		req.setAttribute("urunler", urunler);
 		req.getRequestDispatcher("/admin/urun/urunler.jsp").forward(req, resp);
 	}
+	
+	private void search(HttpServletRequest req, HttpServletResponse resp)
+			throws SQLException, IOException, ServletException {
+		String sorgu = req.getParameter("sorgu");
+		List<Urun> urunler = urunDao.search(sorgu);
+		req.setAttribute("urunler", urunler);
+		req.getRequestDispatcher("/admin/urun/urunler.jsp").forward(req, resp);
+	}
 
 	private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		UrunForm formData = urunDao.getForm();
+		req.setAttribute("urunForm", formData);
+		
 		req.getRequestDispatcher("/admin/urun/urunform.jsp").forward(req, resp);
 	}
 
 	private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
 			throws SQLException, ServletException, IOException {
+		UrunForm  formData = urunDao.getForm();
+		req.setAttribute("urunForm", formData);
+		
 		int id = Integer.parseInt(req.getParameter("urunId"));
 		Urun eskiUrun = urunDao.read(id);
 		req.setAttribute("urun", eskiUrun);
+		
 		req.getRequestDispatcher("/admin/urun/urunform.jsp").forward(req, resp);
 	}
 

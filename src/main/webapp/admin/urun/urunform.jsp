@@ -1,3 +1,7 @@
+<%@page import="eTicaret.admin.model.UrunForm"%>
+<%@page import="java.util.List"%>
+<%@page import="eTicaret.admin.model.Urun"%>
+<%@page import="eTicaret.admin.model.Kategori"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,8 +48,25 @@
 					class="form-control" value="${urun.getStokMiktar()}">
 			</div>
 			<div class="form-group">
-				<label for="password">Kategori ID</label> <input type="text"
-					name="kategoriId" class="form-control" value="${urun.getKategoriId()}">
+				<label for="kategoriId">Kategori</label><select
+					class="form-select" id="kategoriId" name="kategoriId">
+					<%
+					UrunForm urunForm = (UrunForm) request.getAttribute("urunForm");
+					Urun urun = (Urun) request.getAttribute("urun");
+						
+					for (Kategori kategori : urunForm.getKategoriler()) {
+						boolean isSelected = false;
+						if (urun != null) {
+							isSelected = kategori.getId() == urun.getKategoriId();
+						}
+					%>
+					<option value="<%=kategori.getId()%>" <%=isSelected ? "selected" : ""%>>[<%=kategori.getId()%>]
+						<%=kategori.getAd()%>
+					</option>
+					<%
+					}
+					%>
+				</select>
 			</div>
 
 			<div class="row my-5">

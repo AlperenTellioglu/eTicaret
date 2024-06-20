@@ -7,6 +7,8 @@ public class Urun {
 	private double fiyat;
 	private int stokMiktar;
 	private int kategoriId;
+	
+	private String kategoriAdi;
 
 	public Urun(int id, String ad, String aciklama, double fiyat, int stokMiktar, int kategoriId) {
 		setId(id);
@@ -63,5 +65,13 @@ public class Urun {
 
 	public void setKategoriId(int kategoriId) {
 		this.kategoriId = kategoriId;
+	}
+
+	public String getKategoriAdi() {
+		return kategoriAdi;
+	}
+
+	public void setKategoriAdi(String kategoriAdi) {
+		this.kategoriAdi = kategoriAdi;
 	}
 }

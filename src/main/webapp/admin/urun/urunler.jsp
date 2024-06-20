@@ -31,15 +31,17 @@
 			<div class="col">
 				<a class="btn btn-secondary" href="/eTicaret/admin/dashboard">Geri</a>
 			</div>
-						<div class="col">
-				<div class="input-group mb-3">
-					<input type="text" class="form-control"
-						placeholder="Ürün ID, Ürün Adı, Kategori Adı"
-						aria-label="Recipient's username" aria-describedby="basic-addon2">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button">Ara</button>
+			<div class="col">
+				<form action="/eTicaret/admin/product/search" method="get">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" name="sorgu"
+							placeholder="Ürün Adı, Açıklama, Kategori Adı"
+							aria-label="Recipient's username" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit">Ara</button>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 			<div class="col text-end">
 				<a class="btn btn-primary" href="/eTicaret/admin/product/add">Ürün
@@ -75,7 +77,7 @@
 					<td class="align-middle"><%=urun.getAciklama()%></td>
 					<td class="align-middle"><%=urun.getFiyat()%></td>
 					<td class="align-middle"><%=urun.getStokMiktar()%></td>
-					<td class="align-middle"><%=urun.getKategoriId()%></td>
+					<td class="align-middle"><%=urun.getKategoriAdi()%> [<%=urun.getKategoriId()%>]</td>
 					<td class="text-end">
 						<form action="/eTicaret/admin/product/update" method="get"
 							class="d-inline">
@@ -86,8 +88,7 @@
 										d="M3 21h18v2H3v-2zm3.89-2.49l2.29-.57 12.32-12.33a2.51 2.51 0 0 0 0-3.54l-.56-.56a2.51 2.51 0 0 0-3.54 0L5.59 14.33l-.57 2.29a1.25 1.25 0 0 0 1.87 1.87zm2.3-3.09L18.11 3.89a.75.75 0 0 1 1.06 0l.56.56a.75.75 0 0 1 0 1.06L7.81 15.11l-1.13.28.28-1.13z" />
                         </svg>
 							</button>
-							<input type="hidden" name="urunId"
-								value="<%=urun.getId()%>">
+							<input type="hidden" name="urunId" value="<%=urun.getId()%>">
 						</form>
 						<form action="/eTicaret/admin/product/" method="post"
 							class="d-inline">
